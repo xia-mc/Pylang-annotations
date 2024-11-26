@@ -1,3 +1,3 @@
-rmdir /s /q dist build pylang_annotations.egg-info
+rmdir /s /q dist build
 py -m build
 twine upload --repository pypi dist/*
