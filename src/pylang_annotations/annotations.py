@@ -3,36 +3,35 @@ from typing import Callable, TypeVar
 __T = TypeVar("__T", bound=Callable[..., ...])
 
 
-def native(func: __T) -> __T:
+# noinspection PyUnusedLocal
+def native(func: __T, onlyFunc: bool = False, /) -> __T:
     """
-    Force the compilation of this function to native code, bypassing Pylang's automatic decision.
+    Compile this function to native code, bypassing Pylang's default behavior.
 
-    When using this decorator, Pylang will attempt to compile the target function into native code
-    (e.g., C or Cython). This can potentially improve performance significantly, but may also lead
-    to the following issues:
+    ### Parameters:
+    - `onlyFunc` (`bool`, optional):
+      - `True`: Only compile this function into native code.
+      - `False` (default): Allow Pylang to decide whether to compile the entire module.
 
-    - **Behavior changes**: Native compilation may alter certain Python language features or behaviors,
-     meaning the compiled function might behave differently from the original Python function.
-    - **Runtime errors**: In some cases, the compilation process may fail, resulting in runtime errors
-     or undefined behavior.
-    - **Fallback mechanism**: If the native compilation fails, Pylang will automatically fall back to
-     interpreting the function as a regular Python function.
+    ### Notes:
+    - Native compilation can improve performance but may alter Python's behavior.
+    - If compilation fails, Pylang will fall back to interpreting the function.
 
-    **Note**:
-    - Ensure that the logic of the function is safe to compile into native code before using `@native`.
-    - Additional testing may be required to verify that the behavior of the compiled function matches
-     expectations.
+    ### Example:
+    ```python
+    @native
+    def compute(x, y):
+        return x ** y
 
-    Example:
-       @native
-       def compute_heavy_task(x, y):
-           # Complex computation logic
-           return x ** y
+    @native(True)
+    def isolated_func(a, b):
+        return a + b
+    ```
     """
     return func
 
 
-def pure(func: __T) -> __T:
+def pure(func: __T, /) -> __T:
     """
     Mark this function as a pure function, allowing Pylang to precompute its result.
 
