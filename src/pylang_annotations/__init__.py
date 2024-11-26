@@ -1,5 +1,3 @@
-__all__ = ["native", "pure", "skip_module"]
-
 from typing import Callable, TypeVar, Final
 
 
@@ -69,3 +67,5 @@ skip_module: Final[_Feature] = _Feature()
 To use it, place the following import at the top of your module:
     from pylang.annotations import skip_module
 """
+
+__all__ = ["native", "pure", "skip_module"]
