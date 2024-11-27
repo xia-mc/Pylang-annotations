@@ -10,7 +10,7 @@ __T = TypeVar("__T", bound=Callable[..., ...])
 
 
 # noinspection PyUnusedLocal
-def native(func: __T, onlyFunc: bool = False, /) -> __T:
+def native(func: __T, onlyFunc: bool = False) -> __T:
     """
     Compile this function to native code, bypassing Pylang's default behavior.
 
@@ -37,7 +37,7 @@ def native(func: __T, onlyFunc: bool = False, /) -> __T:
     return func
 
 
-def pure(func: __T, /) -> __T:
+def pure(func: __T) -> __T:
     """
     Mark this function as a pure function, allowing Pylang to precompute its result.
 
