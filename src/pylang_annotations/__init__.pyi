@@ -10,7 +10,7 @@ __T = TypeVar("__T", bound=Callable[..., ...])
 
 
 # noinspection PyUnusedLocal
-def native(func: __T, onlyFunc: bool = False) -> __T:
+def native(onlyFunc: bool = False) -> __T:
     """
     Compile this function to native code, bypassing Pylang's default behavior.
 
