@@ -1,4 +1,4 @@
-from typing import Callable, TypeVar, Final
+from typing import Callable, TypeVar, Final, overload
 
 
 class _Feature:
@@ -9,8 +9,11 @@ class _Feature:
 __T = TypeVar("__T", bound=Callable[..., ...])
 
 
-# noinspection PyUnusedLocal
-def native(onlyFunc: bool = False, /) -> __T:
+@overload
+def native(func: __T, /) -> __T: ...
+
+@overload
+def native(onlyFunc: bool = False, /) -> Callable[[__T], __T]:
     """
     Compile this function to native code, bypassing Pylang's default behavior.
 

@@ -1,9 +1,5 @@
-def native(onlyFunc=None, /):
-    if type(onlyFunc) is bool:
-        def wrapper(func):
-            return func
-        return wrapper
-    return onlyFunc
+def native(arg=None, /):
+    return arg if callable(arg) else lambda func: func
 
 
 def pure(func, /):
