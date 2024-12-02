@@ -10,16 +10,40 @@ __T = TypeVar("__T", bound=Callable[..., ...])
 
 
 @overload
-def native(func: __T, /) -> __T: ...
-
-@overload
-def native(onlyFunc: bool = False, /) -> Callable[[__T], __T]:
+def native(func: __T, /) -> __T:
     """
-    Compile this function to native code, bypassing Pylang's default behavior.
+    Compile this function/class to native code, bypassing Pylang's default behavior.
 
     ### Parameters:
-    - `onlyFunc` (`bool`, optional):
-      - `True`: Only compile this function into native code.
+    - `only` (`bool`, optional):
+      - `True`: Only compile this function/class into native code.
+      - `False` (default): Allow Pylang to decide whether to compile the entire module.
+
+    ### Notes:
+    - Native compilation can improve performance but may alter Python's behavior.
+    - If compilation fails, Pylang will fall back to interpreting the function.
+
+    ### Example:
+    ```python
+    @native
+    def compute(x, y):
+        return x ** y
+
+    @native(True)
+    def isolated_func(a, b):
+        return a + b
+    ```
+    """
+    pass
+
+@overload
+def native(only: bool = False, /) -> Callable[[__T], __T]:
+    """
+    Compile this function/class to native code, bypassing Pylang's default behavior.
+
+    ### Parameters:
+    - `only` (`bool`, optional):
+      - `True`: Only compile this function/class into native code.
       - `False` (default): Allow Pylang to decide whether to compile the entire module.
 
     ### Notes:
